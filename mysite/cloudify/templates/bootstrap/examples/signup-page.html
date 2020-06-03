@@ -1,0 +1,134 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Favicons -->
+    <title>
+        Cloudify Sign In
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="{% static 'cloudify/assets/css/material-kit.css' %}">           <!--  -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+
+<style>
+    body{
+        background: #16222A;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to top, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to top, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    button {
+      width:100px;
+      height:50px;
+      display:inline-block;
+      font-family:Arial, "Helvetica", sans-serif;
+      font-size:16px;
+      font-weight:bold;
+      color:#fff;
+      text-decoration:none;
+      text-transform:uppercase;
+      text-align:center;
+      text-shadow:1px 1px 0px #07526e;
+      padding-top:6px;
+      left:30px;
+      position:center;
+      cursor:pointer;
+      border: none;
+      background: #109bce;
+      background-image: linear-gradient(bottom, rgb(14,137,182) 0%, rgb(22,179,236) 100%);
+      border-radius: 5px;
+      box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #07526e, 0px 10px 5px #999;
+    }
+
+    button:active {
+      top:3px;
+      box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #07526e, 0px 5px 3px #999;
+    }
+
+    button:before {
+      /*font-family: 'socialfont';
+      font-size: 50px;
+      line-height: 1em;
+      font-weight: normal;
+      color: #fff;
+      content:"\F020";
+      width:85px;
+      height:90px;
+      display:block;
+      position:absolute;
+      padding-top:10px;
+      top:10px;
+      text-shadow: 1px 1px 2px #07526e; */
+
+    }
+
+    button:active:before {
+      top: 7px;
+      font-size: 50px;
+      text-shadow: 0px 3px 0px #07526e, 0px 5px 1px #07526e/*, 3px 0px 1px #07526e, 3px 3px 1px #07526e,
+         -2px 0px 1px #68cff2*/;
+    }
+</style>
+</head>
+
+<body>
+    <nav class="navbar  navbar-transparent  navbar-absolute  navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="../index.html">Cloudify</a>
+            </div>
+            <div class="collapse navbar-collapse">
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="section section-signup page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 ml-auto mr-auto">
+                        <div class="card card-signup">
+                            <form class="form" method="post" action="">
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                                <div class="card-header card-header-primary text-center">
+                                    <h4>Sign In</h4>
+                                    <div class="social-line">
+                                        <a href="#pablo" class="btn btn-link btn-just-icon">
+                                            <i class="fab fa-cloudversify fa-1x"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">face</i>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="User Name...">
+                                    </div> 
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                        <input type="password" class="form-control" placeholder="Password...">
+                                    </div>
+                                </div>
+                                <div class="card-footer justify-content-center">
+                                    <!-- <a href="#pablo" class="btn btn-link btn-primary btn-lg">Submit</a> -->
+                                    <!-- <p class="btn btn-link btn-primary btn-lg"><input type="submit" value="Log-in"></p> -->
+                                    <button class="Log_In"><input type="submit" value="Log in"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

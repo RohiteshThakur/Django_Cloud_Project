@@ -1,0 +1,47 @@
+{
+  "location": "West Europe",
+  "properties": {
+    "hardwareProfile": {
+      "vmSize": "Standard_D2_v2"
+    },
+    "storageProfile": {
+      "imageReference": {
+        "sku": "2016-Datacenter",
+        "publisher": "MicrosoftWindowsServer",
+        "version": "latest",
+        "offer": "WindowsServer"
+      },
+      "osDisk": {
+        "caching": "ReadWrite",
+        "managedDisk": {
+          "storageAccountType": "Standard_LRS"
+        },
+        "name": "myVMosdisk",
+        "createOption": "FromImage"
+      },
+      "dataDisks": [
+        {
+          "diskSizeGB": 1023,
+          "createOption": "Empty",
+          "lun": 0
+        }
+      ]
+    },
+    "osProfile": {
+      "adminUsername": "rohit",
+      "computerName": "myVM",
+      "adminPassword": "<Pa$$w03d>"
+    },
+    "networkProfile": {
+      "networkInterfaces": [
+        {
+          "id": "/subscriptions/<<<<<< SubID >>>>>>>/resourceGroups/MyTestRG/providers/Microsoft.Network/networkInterfaces/MyTestNIC",
+          "properties": {
+            "primary": true
+          }
+        }
+      ]
+    }
+  },
+  "name": "myautotestVM"
+}

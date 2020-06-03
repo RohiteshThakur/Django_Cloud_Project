@@ -1,0 +1,137 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Favicons -->
+    <title>
+        Meter Details
+    </title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
+    <link href="{% static 'cloudify/assets/css/meterdetail.css' %}" rel="stylesheet" />             <!--  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />   <!-- Note this -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
+    <!-- iframe removal -->
+</head>
+<style type="text/css">
+    .pricingContent{
+    font: normal 15px Ubuntu, Arial, sans-serif;
+    }
+
+    .pricingTable {
+        margin-bottom: 10px; 
+        margin-top: 40px;   
+    }
+
+    .pricingTable-header{
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .pricingContent {
+       border-radius: 0px 0px 10px 10px; 
+    }
+
+    .effect1{
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+       -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+    }
+
+    .pricingTable {height: 65%;
+        float: left;
+        width:270px;
+        border-radius: 10px 10px 0px 0px;
+       -webkit-transform: translate(0px, 0px);
+       -moz-transform: translate(0px, 0px);
+       -o-transform: translate(0px, 0px);
+       -ms-transform: translate(0px, 0px);
+       transform: translate(0px, 0px);
+       -webkit-transition: all 0.2s ease-in-out;
+       -moz-transition: all 0.2s ease-in-out;
+       -o-transition: all 0.2s ease-in-out;
+       -ms-transition: all 0.2s ease-in-out;
+       transition: all 0.2s ease-in-out;
+        }   
+     
+    /**** COLUMN HOVERS ****/
+    .pricingTable:hover{
+        position: relative;
+        z-index: 100;
+        box-shadow: 5px 0px 25px rgba(0,0,0,0.7);
+        -webkit-box-shadow: 5px 0px 25px rgba(0,0,0,0.7);
+        -moz-box-shadow: 5px 0px 25px rgba(0,0,0,0.7);
+        -webkit-transform: translate(-5px,-15px);
+       -moz-transform: translate(-5px,-15px);
+       -o-transform: translate(-5px,-15px);
+       -ms-transform: translate(-5px,-15px);
+       transform: translate(-5px,-15px);
+       -webkit-transition-delay: 0s;
+       -moz-transition-delay: 0s;
+       -o-transition-delay: 0s; 
+       -ms-transition-delay: 0s;
+       transition-delay: 0s;
+        }
+</style>
+
+
+<div class="container-fluid">
+    <div class="row">
+    {% for elem in meterdetail %}
+        <div class="col-md-2 col-sm-6">
+            <div class="pricingTable">
+                <div class="pricingTable-header">
+                    <span class="heading">
+                        <h3>Azure Cloud Services</h3>
+                        <span style="font-weight: bold"> {{elem.MeterCategory}} Rate Card </span>
+                    </span>
+                    {% if elem.MonthlyCost %}
+                    <span class="price-value"> &pound{{elem.MonthlyCost}}  <span class="month">  per month</span> 
+                    {% endif %}
+                    <span>Additional information</span>
+                </div>
+
+                <div class="pricingContent">
+                    <ul>
+                        <li>Region: {{elem.MeterRegion}}</li>
+                        <!-- <li>Category: {{elem.MeterCategory}}</li> -->
+                        <li>Subcategory: {{elem.MeterSubCategory}} </li>
+                        <!-- <li> -->
+                        {% for key, value in elem.MeterRates.items %}
+                            <li>Rates: {{ key}} {{" - "}} {{value | truncatechars:"8" }} {{"GBP"}}</li>
+                        {% endfor %}
+                        <!-- </li> -->
+                        <li>Name: {{elem.MeterName}}</li>
+                        <li>EffectiveDate: {{ elem.EffectiveDate | truncatechars:"13" }}</li>
+                        {% if elem.MeterTags %}
+                            <li>MeterTags: {{elem.MeterTags}}</li>
+                        {% else %}
+                            <li>MeterTags: {{ "None" }}</li>
+                        {% endif %}
+                        <li>Included Quantity: {{elem.IncludedQuantity}}</li>
+                        <li>Charging Unit: {{elem.Unit}}</li>
+                    </ul>
+                <!-- </div>    /  CONTENT BOX -->
+                <div class="pricingTable-sign-Up">
+                        <br>                    
+                        <a href="#" class="btn btn-block btn-default">Select</a>
+                        <br>
+                </div>
+                </div> <!--/  CONTENT BOX {This is just a Hack. To remove this hack, just remove this <div> and unhash, the above and comment out everything in betwen} -->
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+
+</html>
+

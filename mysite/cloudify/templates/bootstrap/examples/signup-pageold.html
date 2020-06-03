@@ -1,0 +1,434 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="{% static 'cloudify/assets/img/kit/free/apple-icon.png' %}">
+    <link rel="icon" href="{% static 'cloudify/assets/img/kit/free/favicon.png' %}">
+    <title>
+        Cloudify Login
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="{% static 'cloudify/assets/css/material-kit.css' %}">
+    <!-- Documentation extras -->
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{% static 'cloudify/assets/assets-for-demo/demo.css' rel="stylesheet %}" />
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- iframe removal -->
+
+    <style>
+        #particles-js{
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: 50% 50%;
+        position: fixed;
+        top: 0px;
+        z-index:1;
+    }
+    </style>
+
+    <script>
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js", function(){
+        particlesJS('particles-js',
+          {
+            "particles": {
+              "number": {
+                "value": 80,
+                "density": {
+                  "enable": true,
+                  "value_area": 800
+                }
+              },
+              "color": {
+                "value": "#ffffff"
+              },
+              "shape": {
+                "type": "circle",
+                "stroke": {
+                  "width": 0,
+                  "color": "#000000"
+                },
+                "polygon": {
+                  "nb_sides": 5
+                },
+                "image": {
+                  "width": 100,
+                  "height": 100
+                }
+              },
+              "opacity": {
+                "value": 0.5,
+                "random": false,
+                "anim": {
+                  "enable": false,
+                  "speed": 1,
+                  "opacity_min": 0.1,
+                  "sync": false
+                }
+              },
+              "size": {
+                "value": 5,
+                "random": true,
+                "anim": {
+                  "enable": false,
+                  "speed": 40,
+                  "size_min": 0.1,
+                  "sync": false
+                }
+              },
+              "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#ffffff",
+                "opacity": 0.4,
+                "width": 1
+              },
+              "move": {
+                "enable": true,
+                "speed": 6,
+                "direction": "none",
+                "random": false,
+                "straight": false,
+                "out_mode": "out",
+                "attract": {
+                  "enable": false,
+                  "rotateX": 600,
+                  "rotateY": 1200
+                }
+              }
+            },
+            "interactivity": {
+              "detect_on": "canvas",
+              "events": {
+                "onhover": {
+                  "enable": true,
+                  "mode": "repulse"
+                },
+                "onclick": {
+                  "enable": true,
+                  "mode": "push"
+                },
+                "resize": true
+              },
+              "modes": {
+                "grab": {
+                  "distance": 400,
+                  "line_linked": {
+                    "opacity": 1
+                  }
+                },
+                "bubble": {
+                  "distance": 400,
+                  "size": 40,
+                  "duration": 2,
+                  "opacity": 8,
+                  "speed": 3
+                },
+                "repulse": {
+                  "distance": 200
+                },
+                "push": {
+                  "particles_nb": 4
+                },
+                "remove": {
+                  "particles_nb": 2
+                }
+              }
+            },
+            "retina_detect": true,
+            "config_demo": {
+              "hide_card": false,
+              "background_color": "#b61924",
+              "background_image": "",
+              "background_position": "50% 50%",
+              "background_repeat": "no-repeat",
+              "background_size": "cover"
+            }
+          }
+        );
+
+    });
+    </script>
+
+</head>
+
+<body class="signup-page ">
+    <div class="section section-signup page-header" style="background-image: url('/static/cloudify/assets/img/kit/free/city.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 ml-auto mr-auto">
+                        <div class="card card-signup">
+                            <form class="form" method="" action="">
+                                <div class="card-header card-header-primary text-center">
+                                    <h4>Sign In</h4>
+                                    <div class="social-line">
+                                        <a href="#pablo" class="btn btn-link btn-just-icon">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <a href="#pablo" class="btn btn-link btn-just-icon">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                        <a href="#pablo" class="btn btn-link btn-just-icon">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- <p class="text-divider">Or Be Classical</p> -->
+                                <div class="card-body">
+                                    <span class="bmd-form-group"><div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">face</i>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="User Name...">
+                                    </div></span>
+                                    <!--
+                                    <span class="bmd-form-group"><div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">email</i>
+                                        </span>
+                                        <input type="email" class="form-control" placeholder="Email...">
+                                    </div></span>
+                                    -->
+                                    <span class="bmd-form-group"><div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                        <input type="password" class="form-control" placeholder="Password...">
+                                    </div></span>
+                                    <!-- If you want to add a checkbox to this form, uncomment this code
+
+              <div class="form-check">
+                  <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value="">
+                      Subscribe to newsletter
+                      <span class="form-check-sign">
+                          <span class="check"></span>
+                      </span>
+                  </label>
+              </div> -->
+                                </div>
+                                <div class="card-footer justify-content-center">
+                                    <a href="#pablo" class="btn btn-link btn-primary btn-lg">Submit</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <nav class="navbar  navbar-transparent    navbar-absolute  navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="../index.html">Cloudify</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <i class="material-icons">apps</i> Components
+                        </a>
+                        <div class="dropdown-menu dropdown-with-icons">
+                            <a href="../index.html" class="dropdown-item">
+                                <i class="material-icons">layers</i> All Components
+                            </a>
+                            <a href="http://demos.creative-tim.com/material-kit/docs/2.0/getting-started/introduction.html" class="dropdown-item">
+                                <i class="material-icons">content_paste</i> Documentation
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)" onclick="scrollToDownload()">
+                            <i class="material-icons">cloud_download</i> Download
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank" data-original-title="Follow us on Twitter">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank" data-original-title="Like us on Facebook">
+                            <i class="fa fa-facebook-square"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank" data-original-title="Follow us on Instagram">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="particles-js"></div> 
+    <div class="page-header header-filter" filter-color="purple" style="background-image: url(&apos;/static/cloudify/assets/img/kit/free/bg7.jpg&apos;); background-size: cover; background-position: top center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 ml-auto mr-auto">
+                    <div class="card card-signup">
+                        <h2 class="card-title text-center">Register</h2>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5 ml-auto">
+                                    <div class="info info-horizontal">
+                                        <div class="icon icon-rose">
+                                            <i class="material-icons">timeline</i>
+                                        </div>
+                                        <div class="description">
+                                            <h4 class="info-title">Marketing</h4>
+                                            <p class="description">
+                                                We've created the marketing campaign of the website. It was a very interesting collaboration.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="info info-horizontal">
+                                        <div class="icon icon-primary">
+                                            <i class="material-icons">code</i>
+                                        </div>
+                                        <div class="description">
+                                            <h4 class="info-title">Fully Coded in HTML5</h4>
+                                            <p class="description">
+                                                We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="info info-horizontal">
+                                        <div class="icon icon-info">
+                                            <i class="material-icons">group</i>
+                                        </div>
+                                        <div class="description">
+                                            <h4 class="info-title">Built Audience</h4>
+                                            <p class="description">
+                                                There is also a Fully Customizable CMS Admin Dashboard for this product.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 mr-auto">
+                                    <div class="social text-center">
+                                        <button class="btn btn-just-icon btn-round btn-twitter">
+                                            <i class="fa fa-twitter"></i>
+                                        </button>
+                                        <button class="btn btn-just-icon btn-round btn-dribbble">
+                                            <i class="fa fa-dribbble"></i>
+                                        </button>
+                                        <button class="btn btn-just-icon btn-round btn-facebook">
+                                            <i class="fa fa-facebook"> </i>
+                                        </button>
+                                        <h4> or be classical </h4>
+                                    </div>
+                                    <form class="form" method="" action="">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">face</i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="First Name...">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">mail</i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Email...">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">lock_outline</i>
+                                                    </span>
+                                                </div>
+                                                <input type="password" placeholder="Password..." class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="" checked>
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                                I agree to the
+                                                <a href="#something">terms and conditions</a>.
+                                            </label>
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="#pablo" class="btn btn-primary btn-round">Get Started</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    -->
+    <!--
+        <footer class="footer ">
+            <div class="container">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="https://www.creative-tim.com">
+                                Creative Tim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://presentation.creative-tim.com">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://blog.creative-tim.com">
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.creative-tim.com/license">
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright pull-right">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>, made with <i class="material-icons">favorite</i> by
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    </div>
+
+</body>
+
+</html>
