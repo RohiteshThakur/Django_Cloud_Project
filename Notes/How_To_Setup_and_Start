@@ -1,0 +1,36 @@
+Create Project in Django:
+# django-admin.py startproject mysite
+# python manage.py startapp cloudify
+
+
+# cd /media/redhat/apps/Django_Project
+
+Activate the Virtual Environment:
+# source my_env/bin/activate
+
+Run Django Webserver:
+# cd mysite/
+# python manage.py runserver
+
+Open Chrome:
+http://127.0.0.1:8000/cloudify/login/
+
+
+To stop execution of Web Server:
+# deactivate
+
+
+
+SMB mount from Windows to VM:
+$ sudo mount.cifs -o username=rohiteshthakur@outlook.com //192.168.1.14/SHARED /home/redhat/IMPORTED
+$
+
+
+Admin / Pass:
+-------------
+admin / redhat_admin
+
+Change admin password:
+----------------------
+http://127.0.0.1:8000/admin/
+Click on Users -> "admin" -> Under Password click on "this form"

@@ -178,15 +178,15 @@ def List_VMs(request, SubId):
 			SubId = cd['SubId']
 			print (SubId)
 			if SubId is not None:
-				API_ENDPOINT = "https://management.azure.com/subscriptions/273949b5-7c43-492c-9419-a248e397d865/resources?api-version=2016-02-01"
+				API_ENDPOINT = "https://management.azure.com/subscriptions/<Subscription_ID>/resources?api-version=2016-02-01"
 				subscription_id = SubId
-				tenant_id       = "f8cc34ec-175c-4586-acf5-d544d7bd8859"
+				tenant_id       = "<Tenant_ID>"
 				grant_type      = "client_credentials"
-				client_id       = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
+				client_id       = "<App_Client_Id>"
 				resource        = "https://management.azure.com/"
-				app_client_id   = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
-				client_secret   = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
-				MySecretKey     = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
+				app_client_id   = "<App_Client_Id>"
+				client_secret   = "<App_Secret>"
+				MySecretKey     = "<App_Secret>"
 
 				URL = "https://login.microsoftonline.com/"+tenant_id+"/oauth2/token"
 
@@ -256,15 +256,15 @@ def manage_azure(request):
 			SubId = cd['SubId']
 			print (SubId)
 			if SubId is not None:
-				API_ENDPOINT = "https://management.azure.com/subscriptions/273949b5-7c43-492c-9419-a248e397d865/resources?api-version=2016-02-01"
+				API_ENDPOINT = "https://management.azure.com/subscriptions/<Subscription_ID>/resources?api-version=2016-02-01"
 				subscription_id = SubId
-				tenant_id       = "f8cc34ec-175c-4586-acf5-d544d7bd8859"
+				tenant_id       = "<Tenant_ID>"
 				grant_type      = "client_credentials"
-				client_id       = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
+				client_id       = "<App_Client_Id>"
 				resource        = "https://management.azure.com/"
-				app_client_id   = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
-				client_secret   = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
-				MySecretKey     = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
+				app_client_id   = "<App_Client_Id>"
+				client_secret   = "<App_Secret>"
+				MySecretKey     = ""
 
 				URL = "https://login.microsoftonline.com/"+tenant_id+"/oauth2/token"
 
@@ -312,13 +312,13 @@ def manage_azure(request):
 			if SubId is not None:
 				API_ENDPOINT = "https://management.azure.com/subscriptions/" + SubId + "/resourceGroups/"+ ResourceGroup + "/providers/Microsoft.Compute/virtualMachines/" + VmName + "?api-version=2017-12-01"
 				subscription_id = SubId
-				tenant_id       = "f8cc34ec-175c-4586-acf5-d544d7bd8859"
+				tenant_id       = "<Tenant_ID>"
 				grant_type      = "client_credentials"
-				client_id       = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
+				client_id       = "<App_Client_Id>"
 				resource        = "https://management.azure.com/"
-				app_client_id   = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
-				client_secret   = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
-				MySecretKey     = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
+				app_client_id   = "<App_Client_Id>"
+				client_secret   = "<App_Secret>"
+				MySecretKey     = "<App_Secret>"
 
 				URL = "https://login.microsoftonline.com/"+tenant_id+"/oauth2/token"
 
@@ -367,13 +367,13 @@ def manage_azure(request):
 			if SubId is not None:
 				API_ENDPOINT 	= "https://management.azure.com/subscriptions/" + SubId + "/resourceGroups/" + ResourceGroup + "/providers/Microsoft.Compute/virtualMachines/" + VmName + "/powerOff?api-version=2017-12-01"
 				subscription_id = SubId
-				tenant_id       = "f8cc34ec-175c-4586-acf5-d544d7bd8859"
+				tenant_id       = "<Tenant_ID>"
 				grant_type      = "client_credentials"
-				client_id       = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
+				client_id       = "<App_Client_Id>"
 				resource        = "https://management.azure.com/"
-				app_client_id   = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
-				client_secret   = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
-				MySecretKey     = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
+				app_client_id   = "<App_Client_Id>"
+				client_secret   = "<App_Secret>"
+				MySecretKey     = "<App_Secret>"
 
 				URL = "https://login.microsoftonline.com/"+tenant_id+"/oauth2/token"
 
@@ -414,13 +414,13 @@ def manage_azure(request):
 			if SubId is not None:
 				API_ENDPOINT 	= "https://management.azure.com/subscriptions/" + SubId + "/resourceGroups/" + ResourceGroup + "/providers/Microsoft.Compute/virtualMachines/" + VmName + "/start?api-version=2017-12-01"
 				subscription_id = SubId
-				tenant_id       = "f8cc34ec-175c-4586-acf5-d544d7bd8859"
+				tenant_id       = "<Tenant_ID>"
 				grant_type      = "client_credentials"
-				client_id       = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
+				client_id       = "<App_Client_Id>"
 				resource        = "https://management.azure.com/"
-				app_client_id   = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
-				client_secret   = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
-				MySecretKey     = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
+				app_client_id   = "<App_Client_Id>"
+				client_secret   = "<App_Secret>"
+				MySecretKey     = "<App_Secret>"
 
 				URL = "https://login.microsoftonline.com/"+tenant_id+"/oauth2/token"
 
@@ -467,13 +467,13 @@ def azure_usage(request):
 			if SubId is not None:
 				API_ENDPOINT 	= "https://management.azure.com/subscriptions/"+ SubId +"/providers/Microsoft.Consumption/usageDetails?api-version=2018-01-31"
 				subscription_id = SubId
-				tenant_id       = "f8cc34ec-175c-4586-acf5-d544d7bd8859"
+				tenant_id       = "<Tenant_ID>"
 				grant_type      = "client_credentials"
-				client_id       = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
+				client_id       = "<App_Client_Id>"
 				resource        = "https://management.azure.com/"
-				app_client_id   = "6a02b44e-5643-4c31-b726-8cab6cf8b258"
-				client_secret   = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
-				MySecretKey     = "zOQSlLNtsECjBm4tRtnVRUTFGaKHn7yfQaDIZzn2rYs="
+				app_client_id   = "<App_Client_Id>"
+				client_secret   = "<App_Secret>"
+				MySecretKey     = "<App_Secret>"
 
 	
 			URL = "https://login.microsoftonline.com/"+tenant_id+"/oauth2/token"

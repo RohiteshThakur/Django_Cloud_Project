@@ -1,0 +1,87 @@
+1.	Create a form in an .html file (in this case manage_azure.html):
+	{% load staticfiles %}
+
+		{% block content %}			----> Block content should only appear once in one html file.
+		<form method="post" action=".">		# POST method is important. action="." suggests that we will submit the data to the same page
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="inlineFormInput" class="sr-only">Subscription Id</label>
+                <input id="inlineFormInput" name='SubId' type="text" placeholder="Subscription Id" class="mr-sm-4 form-control">
+             </div>
+             <div class="form-group container-fluid col-sm-1 push-right">
+                <input type="submit" name="List" value="List" class="btn btn-primary">
+
+                <!-- This ***name='List'*** is important. This is used by the form to differentiate between form requests -->
+
+             </div>
+
+        <form class="col-lg-12 form-inline" method="post" action=".">
+            {% csrf_token %}
+	          <div class="form-group">
+	            <label for="inlineFormInput" class="sr-only">Subscription Id</label>
+	            <input id="inlineFormInput" name='SubId' type="text" placeholder="Subscription Id" class="mr-sm-4 form-control">
+	          </div>
+	          <div class="form-group container-fluid col-md-1 pull-right">
+                <input type="submit" name = "Create" value="Create" class="btn btn-primary">
+
+                <!-- This ***name='Create'*** is important. This is used by the form to differentiate between form requests -->
+
+              </div>
+        </form>
+        {% endblock %}            ----> Block content should only appear once in one html file.
+
+
+    As we can see above, we have two forms sending different data inside same {% block %}.
+
+
+2.	Update cloudify's urls.py:
+	url (r'^(?P<slug>[-\w]*)/$', views.manage_azure, name='manage_azure'),
+
+
+3.	Once, fields have been defined, update the views.py (in app folder).
+	Note that, we process both forms in the one manage_azure() function.
+
+	from .forms ListVMForm, CreateVMForm ......
+
+	def manage_azure(request):
+		if request.method == 'POST' and 'List' in request.POST: 			# Here I've used "name=List" as a differentiator
+			...
+			form = ListVMForm(request.POST)
+			SubId = cd['SubId']
+			...
+		if request.method == 'POST' and 'Create' in request.POST:			# Here I've used "name=Create" as a differentiator
+			...
+			form = CreateVMForm(request.POST)
+			cd = form.cleaned_data
+			SubId    	  = cd['SubId']
+			ResourceGroup = cd['ResourceGroup']
+			VmName   	  = cd['VmName']
+			UserName 	  = cd['UserName']
+			PassWord 	  = cd['PassWord']
+			...
+
+		return render(request, 'admin_template/manage_azure.html', {})
+
+
+
+4.	Create these variable as fields in app/forms.py. 
+	Note: Every variable name used for storing form data from manage_azure.html in views.py above, must match the field names in forms.py.
+	e.g. PassWord in both views.py and forms.py must spell the same (case included)
+
+	Under app folder (in this case cloudify), create a file forms.py and define the fields. e.g.
+
+	from django import forms
+
+	class CreateVMForm(forms.Form):							# This class inherits from Django forms class.
+	SubId  			= forms.SlugField(required=True)
+	ResourceGroup	= forms.CharField(required=True)
+	VmName			= forms.CharField(required=True)
+	UserName		= forms.CharField(required=False)
+	PassWord 		= forms.CharField(required=False)
+
+	class ListVMForm(forms.Form):
+	SubId = forms.SlugField(required=True)
+
+	-> Above we can see two form classes defined. Keep this in mind, because in next seciton we will see how to handle multiple forms
+	in a single view.
+

@@ -1,0 +1,189 @@
+
+Start Django shell:
+-------------------
+(my_env) redhat@ubuntu:/media/redhat/apps/Django_Project/mysite$ python manage.py shell
+
+Import App model class to work with imported table:
+---------------------------------------------------
+>>> from cloudify.models import Azureratecardtable 					# Import azureratecardtable class from cloudify/models.py
+
+Similarly, if we want to work with Django built-in models:
+>>> from django.contrib.auth.models import User
+
+As we can see above "and in cloudify/models.py" file, Azureratecardtable is a Class. Before proceeding further its worth to what this class has to offer in additions of imported attributes (i.e. database column names (region & ratecard) imported after #python manage.py inspectdb). 
+
+
+Query to return "ALL" objects in a Database:
+--------------------------------------------
+>>> dir(Azureratecardtable)
+>>> dir(Azureratecardtable.objects) 		# check if "get" method is present.
+>>> type (Azureratecardtable.objects.get)	# Its a class'es method and will see below, what arguments to pass.
+<class 'method'>
+
+
+>>> Azureratecardtable.objects.all()
+<QuerySet [<Azureratecardtable: Azureratecardtable object (1)>, <Azureratecardtable: Azureratecardtable object (2)>, <Azureratecardtable: Azureratecardtable object (4)>]>
+
+Note that the objects returned by the command is an Array of QuerySet objects. To access them:
+
+>>> entries = Azureratecardtable.objects.all()
+>>> entry = entries[0]							# Access Object [0] of query set.
+>>> entry.region
+'USA'
+>>> entry.ratecard
+{'OfferTerms': [{'Name': 'Monetary Credit', 'EffectiveDate':..............
+
+
+
+
+Another way to access Queryset Objects:  remember - Get always returns one object. so Make sure the argument passed is unique.
+---------------------------------------
+>>> entry = Azureratecardtable.objects.get(id=1)
+>>> entry.region
+'USA'
+>>> entry.ratecard
+{'OfferTerms': [{'Name': 'Monetary Credit', 'EffectiveDate':..............
+
+
+
+
+
+
+To insert a record:
+>>> newrate = Azureratecardtable.objects.create(region="UK", ratecard='{"MeterRegion": "US Central"}')
+>>> newrate.save()												# A MUST do due to lazy update.
+
+Check @dbadmin prompt:
+ratecarddb=# select * from azureratecardtable;
+ id | region |  ratecard                                       
+----+--------+-------------------------------
+  2 | UK     | {"MeterRegion": "US Central"}					# -> Table azureratecardtable has been updated.
+
+
+>>> res = Azureratecardtable.objects.get(region='UK')
+
+Let's see what this object has to offer, apart from table related actions, I am interested to know if it contains my table's column names or not?
+>>> dir (res) 													# o/p in alphabetical order.
+
+You will find it, when you have do:
+>>> res.ratecard
+{'MeterRegion': 'US Central'}
+
+
+
+TO UPDATE TABLE:
+----------------
+>>> newrate.region = 'GB'
+>>> newrate.save()
+
+ratecarddb=# select * from azureratecardtable;
+ id | region |  ratecard                                       
+----+--------+------------------------------
+  2 | UK     | {"MeterRegion": "US Central"}
+  4 | GB     | {"MeterRegion": "US Central"}
+
+
+
+
+DJANGO QUERY SETS:
+------------------
+# python manage.py shell							#Start Django shell.
+>>> from cloudify.models import Azureratecardtable
+>>> all_item = Azureratecardtable.objects.all()
+>>> all_item.values_list()
+>>> all_item.values()
+>>> all_item.values()[0]							 
+>>> all_item.values()[1]							# Returns all column entries.
+{'ratecard': {'MeterRegion': 'US Central'}, 'region': 'UK', 'id': 2}
+
+>>> all_item.values()[0]['ratecard']['Meters'][0]['MeterCategory']
+'Virtual Machines'
+
+
+>>> all_item.model()								# returns the model class does "all_item" belong.
+
+
+LIST COLUMNS:
+-------------
+>>> all_item.values('id')
+<QuerySet [{'id': 1}, {'id': 2}, {'id': 4}]>
+
+>>> all_item.values('ratecard')						# "list content of column ratecard".
+
+Note: Just like an array it starts with index[0]
+>>> all_item.values('ratecard')[0]					# List content of 1st row of column "ratecard"
+e.g.
+>>> all_item.values('ratecard')[1]
+{'ratecard': {'MeterRegion': 'US Central'}}
+
+Trace down to a particular value:
+---------------------------------
+>>> all_item.values('ratecard')[1]
+{'ratecard': {'MeterRegion': 'US Central'}}
+>>> all_item.values('ratecard')[1]['ratecard']
+{'MeterRegion': 'US Central'}
+>>> all_item.values('ratecard')[1]['ratecard']['MeterRegion']
+'US Central'
+
+
+>>> all_item.values('ratecard')[1].keys()
+dict_keys(['ratecard'])
+>>> all_item.values('ratecard')[1].items()
+dict_items([('ratecard', {'MeterRegion': 'US Central'})])
+
+
+Looping through JSON element in Django shell:
+---------------------------------------------
+>>> res = Azureratecardtable.objects.all() 
+>>> for elem in range(res.count()):
+...     print (res.values('ratecard'))							# This method requires us to call queryset methods.
+... 
+
+>>> for elem in range(res.count()):
+...     print (res.values('ratecard')[elem]['ratecard'])
+... 
+
+>>> for elem in range(res.count()):
+...     print (res.values('ratecard')[elem]['ratecard']['Meters'])	# value of 'Meters' key for every entry in ratecard column.
+... 
+
+>>> res = Azureratecardtable.objects.all() 
+>>> res.values()[0]['ratecard']['Meters'][0]['MeterCategory']
+'Virtual Machines'
+
+
+Accessing elements using "For Loop"
+-----------------------------------
+>>> res = Azureratecardtable.objects.all() 
+>>> for r in res:
+...     if (r.ratecard['Meters']):
+...             print (r.ratecard['Meters'][2]['MeterCategory'])
+... 
+Cloud Services
+
+
+
+Below method bears much similarity with normal JSON data access:
+
+>>> res = Azureratecardtable.objects.get(region='USA')			# Note: below snippet works only with this and not with:
+																# Azureratecardtable.objects.all() as this returns querysets
+
+>>> for elem in range(len(res.ratecard["Meters"])):
+...     if (res.ratecard["Meters"][elem]['MeterCategory'] == "Virtual Machines"):
+...             print (res.ratecard["Meters"][elem])			
+... 
+
+
+>>> for elem in range(res.count()):
+...     print (res.values('ratecard')[0]['ratecard']['Meters'][0]['MeterCategory'])
+... 
+Virtual Machines
+Virtual Machines
+Virtual Machines
+
+
+>>> Azureratecardtable.objects.filter(region__startswith='UK')
+
+
+
+

@@ -1,0 +1,129 @@
+{
+    "OfferTerms": [
+        {
+            "Credit": 40,
+            "EffectiveDate": "2013-12-23T00:00:00Z",
+            "ExcludedMeterIds": [
+                "daf52501-330a-4a7a-a88a-cf85ed40988f",
+                "53cc0061-0fe2-4249-bf62-e1008c811f5c",
+                "d31fc1c5-9ffe-4e96-8f3d-a52f1ec2a7d1",
+                "c2c07d3e-a7d0-400b-8832-b532bfd0be25",
+                "b40291f6-f450-429b-a21f-0bc6711787ac",
+                "a4daffb4-96f4-4fc5-b1e6-fd3a2cf3595e",
+                "4607eff7-1a97-4080-a705-67d0a7525864",
+                "b8ea6d4d-d009-47ea-ba62-fd7be2c511ff",
+                "aa8010ed-4a97-4811-bc68-8e8f702faa5f",
+                "69a140fa-e08e-415c-85f2-48158e4c73a0",
+                "8b2e5cb8-0362-4cbf-a30a-115e8d6dbc49",
+                "5c33b840-166c-4ef2-a2d9-49fa9f9d456f"
+            ],
+            "Name": "Monetary Credit"
+        }
+    ],
+    "Meters": [
+        {
+            "EffectiveDate": "2017-04-01T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Virtual Machines",
+            "MeterId": "d0bf9053-17c4-4fec-8502-4eb8376343a7",
+            "MeterName": "Compute Hours",
+            "MeterRates": {
+                "0": 0.029812360000027576433
+            },
+            "MeterRegion": "US West 2",
+            "MeterSubCategory": "Standard_F2 VM Low Priority (Windows)",
+            "MeterTags": [],
+            "Unit": "Hours"
+        },
+        {
+            "EffectiveDate": "2017-02-01T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Data Services",
+            "MeterId": "8b7672d4-16fc-446e-9935-cf2223c5290f",
+            "MeterName": "Standard S3 Secondary Database Days",
+            "MeterRates": {
+                "0": 2.9944279693
+            },
+            "MeterRegion": "KR South",
+            "MeterSubCategory": "SQL Database",
+            "MeterTags": [],
+            "Unit": "Days"
+        },
+        {
+            "EffectiveDate": "2016-03-01T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Cloud Services",
+            "MeterId": "77860eb6-e2bc-4d06-8efe-491d840adaf5",
+            "MeterName": "Compute Hours",
+            "MeterRates": {
+                "0": 1.709738845999998893961444
+            },
+            "MeterRegion": "AP East",
+            "MeterSubCategory": "Standard_D15_v2 Cloud Services",
+            "MeterTags": [],
+            "Unit": "Hours"
+        },
+        {
+            "EffectiveDate": "2017-01-01T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Storage",
+            "MeterId": "8ebaf4a8-960b-457b-ba6b-70b59c959ec7",
+            "MeterName": "Premium Storage - Page Blob/P60 (Units)",
+            "MeterRates": {
+                "0": 705.12193872
+            },
+            "MeterRegion": "US West",
+            "MeterSubCategory": "Locally Redundant",
+            "MeterTags": [],
+            "Unit": "Units"
+        },
+        {
+            "EffectiveDate": "2016-09-01T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Data Services",
+            "MeterId": "22e690b0-183e-4266-bbeb-0c8ccf98f160",
+            "MeterName": "DWU",
+            "MeterRates": {
+                "0": 1.1269817389
+            },
+            "MeterRegion": "US Central",
+            "MeterSubCategory": "SQL Data Warehouse",
+            "MeterTags": [],
+            "Unit": "Hours"
+        },
+        {
+            "EffectiveDate": "2017-11-03T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Cloud Services",
+            "MeterId": "1c389e44-fc99-46dd-93b4-5aab8f611ccc",
+            "MeterName": "Compute Hours",
+            "MeterRates": {
+                "0": 0.71922318494037528
+            },
+            "MeterRegion": "JA West",
+            "MeterSubCategory": "Standard_E64_v3 Cloud Services Low Priority",
+            "MeterTags": [],
+            "Unit": "1 Hour"
+        },
+        {
+            "EffectiveDate": "2017-01-01T00:00:00Z",
+            "IncludedQuantity": 0,
+            "MeterCategory": "Storage",
+            "MeterId": "08ac266e-213f-4d8d-bc50-36fb4706f1e6",
+            "MeterName": "Standard IO - Disks (GB)",
+            "MeterRates": {
+                "0": 0.0846671024,
+                "1024": 0.0846671024,
+                "1024000": 0.0761705798,
+                "5120000": 0.0626804869
+            },
+            "MeterRegion": "KR South",
+            "MeterSubCategory": "Geo Redundant",
+            "MeterTags": [],
+            "Unit": "GB"
+        }
+    ],
+    "Currency": "GBP",
+    "Locale": "en-GB",
+    "IsTaxIncluded": false
+}

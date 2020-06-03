@@ -1,0 +1,262 @@
+(my_env) redhat@ubuntu:/media/redhat/apps/Azure/DBUpdate$ sudo -i -u postgres
+[sudo] password for redhat: 
+
+
+postgres@ubuntu:~$ psql -h localhost -U dbadmin -d ratecarddb
+Password for user dbadmin: dbadmin
+
+
+ratecarddb=# \pset format wrapped
+ratecarddb# \d+ <table_name>
+
+
+Check DB status post installation:
+
+sudo /etc/init.d/postgresql status
+sudo service postgresql start
+sudo service postgresql restart
+sudo /etc/init.d/postgresql reload
+
+2. Create database.ini under path.. Azure/DBUpdate:
+[postgresql]
+host=localhost
+database=ratecarddb
+user=dbadmin
+password=dbadmin
+
+2. 
+
+Create Table containing JSON data:
+
+DB = ratecarddb
+
+'CREATE TABLE AzureRateCardTable (id SERIAL PRIMARY KEY, region VARCHAR(20) NOT NULL, ratecard JSON NOT NULL);'
+
+
+3. Insert JSON data using file using [PSQL] commands:
+-----------------------------------------------------
+redhat@ubuntu:/media/redhat/apps/Django_Project$ source my_env/bin/activate
+(my_env) redhat@ubuntu:/media/redhat/apps/Django_Project$ sudo -i -u postgres
+postgres@ubuntu:~$ psql -h localhost -U dbadmin -d ratecarddb
+Password for user dbadmin: dbadmin
+ratecarddb=# 
+
+We are @psql prompt for ratecarddb as user dbadmin. This is the user I choose to manage DB.
+
+root@ubuntu:/media/redhat/apps/Azure/DBUpdate# cp -p RateCardSmall.json  /tmp/
+
+ratecarddb=# \set content `cat /tmp/RateCardSmall.json`     # Copy the json file in /tmp. Other folders may complain about access.
+ratecarddb=# INSERT INTO my_table VALUES (:'content');
+
+ratecarddb=# \set content `cat /tmp/RateCardSmall.json`
+ratecarddb=# INSERT INTO AzureRateCardTable (region, ratecard) VALUES ('AzureRegionUK', :'content');
+
+Pythonic method:
+----------------
+with open ("/tmp/RateCardSmall.json", 'r') as js:
+    data = (json.load(js))
+
+SQLQ = "INSERT INTO AzureRateCardTable (region, ratecard) VALUES (%s, %s)"
+PARA = ('USA', json.dumps(data))                            # json.dumps() is needed to serialize JSON.
+cur.execute(SQLQ, PARA)
+
+
+4. Query Table.
+ratecarddb=# select id, region, ratecard::json from azureratecardtable;
+
+ratecarddb=# select id, region, ratecard->'Meters'->0->>'MeterCategory' from azureratecardtable;
+ id |    region     |     ?column?     
+----+---------------+------------------
+  2 | AzureRegionUK | Virtual Machines
+(1 row)
+
+ratecarddb=# select id, region, ratecard->'Meters'->1->>'MeterCategory' from azureratecardtable;
+ id |    region     |   ?column?    
+----+---------------+---------------
+  2 | AzureRegionUK | Data Services
+(1 row)
+
+ratecarddb=# select id, region, ratecard->'Meters'->2->>'MeterCategory' from azureratecardtable;
+ id |    region     |    ?column?    
+----+---------------+----------------
+  2 | AzureRegionUK | Cloud Services
+(1 row)
+
+ratecarddb=# select id, region, ratecard->'Meters'->1->>'MeterRates' from azureratecardtable;
+ id | region |      ?column?       
+----+--------+---------------------
+  1 | USA    | {"0": 2.9944279693}
+
+
+As we can see the results have the last column header ?missing? - since the results procured are different. we can name it using:
+ratecarddb=# select id, region, ratecard->'Meters'->0->>'MeterCategory' as Metercatagory from azureratecardtable;
+ id | region |  metercatagory   
+----+--------+------------------
+  1 | USA    | Virtual Machines
+  2 | UK     | 
+  4 | GB     | 
+(3 rows)
+
+
+
+ratecarddb=# select id, region, ratecard->'Meters'->2->>'MeterCategory' from azureratecardtable;
+-[ RECORD 1 ]------------
+id       | 1
+region   | USA
+?column? | Cloud Services
+
+
+5. PSQL command-line:
+   ------------------
+Get OID of a DB: 
+ratecarddb# SELECT oid from pg_database where datname = 'ratecarddb';
+
+Get Path:
+ratecarddb=# show data_directory;
+        data_directory        
+------------------------------
+ /var/lib/postgresql/9.5/main
+
+Location of DB:
+On Linux prompt: /var/lib/postgresql/9.5/main/base/24613# ls -l
+
+
+
+postgres@ubuntu:~$ psql -E -d ratecarddb -c \set content `cat /tmp/my_file.txt` -f db_commands.sql   (-E lists underlying SQL cmds)
+
+Test: psql -d ratecarddb -e -l -v p_date='20180131' -f db_commands.sql
+
+ratecarddb=# \pset format wrapped
+ratecarddb# \d+ <table_name>
+
+
+                                Configuring Multiple Databases in Django:
+                                -----------------------------------------
+Link: https://www.protechtraining.com/blog/post/477?ncr=1
+Link: https://docs.djangoproject.com/en/dev/topics/db/multi-db/#automatic-database-routing
+
+In Project's settings.py:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mysitedb',
+        'USER': 'dbadmin',
+        'PASSWORD': 'dbadmin',
+        'HOST': 'localhost',
+        'PORT': '',
+
+    },
+
+    'ratecarddb': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ratecarddb',
+        'USER': 'dbadmin',
+        'PASSWORD': 'dbadmin',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+DON'T HAVE TO DO:
+$ ./manage.py migrate
+$ ./manage.py migrate --database=ratecarddb  
+as i wanted Django to continue to use default database for queries not applicable to ratecarddb. I had sync'ed the default database 
+earlier (mysitedb) and can see Django built-in tables in there.
+
+Formally introduce Django to ratecarddb and build models:
+(my_env) redhat@ubuntu:/media/redhat/apps/Django_Project/mysite$ python manage.py inspectdb --database=ratecarddb > cloudify/models.py
+#cat cloudify/models.py
+class Azureratecardtable(models.Model):
+    region = models.CharField(max_length=20)
+    ratecard = models.TextField()  # This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'azureratecardtable'
+
+
+
+At this point, Django has a dafault DB defined, and it will send all incoming requests to the default DB. In order to route the
+traffic to added database (ratecarddb), we need to configure routers. The router class can be found in:
+./cloudify/router.py.
+
+When complete, add below line in settings.py:
+DATABASE_ROUTERS = ['cloudify.router.CloudifyRouter'] 		# Note:cloudify.router is actually the path to the module containing CloudifyRouter class defined in .cloudify/router.py
+
+
+Update admin.py to help it identify your database:
+from .models import Azureratecardtable
+admin.site.register(Azureratecardtable)
+
+
+Test:
+(my_env) redhat@ubuntu:/media/redhat/apps/Django_Project/mysite$ python manage.py runserver
+http://127.0.0.1:8000/admin/
+
+Test: Manual deletion of table, its re-creation and data-ingestion was picked up and visible in the Django portal.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Synchronize Databases:
+----------------------
+(my_env) root@ubuntu:/media/redhat/apps/Django_Project/mysite# ./manage.py migrate			             #
+(my_env) root@ubuntu:/media/redhat/apps/Django_Project/mysite# ./manage.py migrate --database=ratecarddb
+
+Inspect existing DB and create necessary models in .app/models.py:
+------------------------------------------------------------------
+(my_env) root@ubuntu:/media/redhat/apps/Django_Project/mysite# ./manage.py inspectdb --database=ratecarddb >> ./cloudify/models.py
+
+After ths was done, in addition to postgresql built-in tables, azureratecardtable was imported as well:
+class Azureratecardtable(models.Model):					# Line 77. Azureratecardtable imported.
+    region = models.CharField(max_length=20)
+    ratecard = models.TextField()  						# Remove "models." when replacing it with "JSONField" and add import.
+
+    class Meta:
+        managed = False 								# Change this to True, if you want Django to manage this Table.
+        db_table = 'azureratecardtable'
+
+
+Create Migration:
+-----------------
+(my_env) root@ubuntu:/media/redhat/apps/Django_Project/mysite# python manage.py makemigrations cloudify
+
+A file called 0001_initial.py will be created under ./cloudify/migrations/__pycache__
+
+migrations.CreateModel(
+    name='Azureratecardtable',
+    fields=[
+        ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        ('region', models.CharField(max_length=20)),
+        ('ratecard', models.TextField()),
+    ],
+    options={
+        'db_table': 'azureratecardtable',
+        'managed': False,								# Change this to TRUE if you want Django to Manage this Table.
+    },
+),
+
+
+
+
+
+
+
+
+Router config: https://github.com/avelino/django-routers

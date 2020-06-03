@@ -1,0 +1,102 @@
+Sharing STATIC Folder: This was the original issue, Django stopped serving statics aafter setting Debug = False.
+----------------------
+In SETTINGS.py file:
+DEBUG = False 														# 
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] 							# Update hosts.
+
+
+Source directory(from): 
+STATICFILES_DIRS = (
+			os.path.join(os.path.dirname(BASE_DIR), "static"),   	#-> "/media/redhat/apps/Django_project/" + "static" 
+			)
+
+Destination directory(to):
+STATIC_ROOT = os.path.join(BASE_DIR, 'cloudify/static')
+
+(my_env) redhat@ubuntu:/media/redhat/apps/Django_Project/mysite$ python manage.py collectstatic
+
+Following this command, "admin" folder was created under .cloudify/static/ in addition to cloudify.
+
+Latest: I have moved static file under .cloudify/static/admin_template.
+
+
+Configure Bootstrap:
+--------------------
+1. Under App's "templates" folder create, bootstrap folder and an example.html file.
+
+2. The to redirect incoming request to right template, update PROJECT's urls.py file:
+
+from django.views.generic import TemplateView 													# Import this class.
+
+urlpatterns = [
+    url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),			# call this class's method as_view(..).
+]
+
+3. Start django runserver, fire up a browser and load the page: http://127.0.0.1:8000/bootstrap/
+
+4. Create static/ sub-folder under cloudify.
+
+5. In settings.py:			---> Not needed.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static/cloudify"),
+]
+
+6. prepend every src reference "{% static 'cloudify/.../...'  %}"
+
+To be able to redirect pages from example to html:
+Add below lines to Project's urls.py:
+urlpatterns = [
+    url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
+    url(r'^bootstrap/examples/landing-page.html/$', TemplateView.as_view(template_name='bootstrap/examples/landing-page.html')),
+    url(r'^bootstrap/examples/profile-page.html/$', TemplateView.as_view(template_name='bootstrap/examples/profile-page.html')),
+    url(r'^bootstrap/examples/signup-page.html/$', TemplateView.as_view(template_name='bootstrap/examples/signup-page.html')),
+]
+
+
+
+Service Static files when Debug=False
+-------------------------------------
+(my_env) redhat@ubuntu:/media/redhat/apps/Django_Project/mysite$ pip3 install WhiteNoise
+Collecting WhiteNoise
+  Downloading whitenoise-3.3.1-py2.py3-none-any.whl
+Installing collected packages: WhiteNoise
+Successfully installed WhiteNoise-3.3.1
+
+In settings.py add below line:
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+--> 'whitenoise.middleware.WhiteNoiseMiddleware',                           # Added by me for serving static files.
+
+In wsgi.py add below lines:
+from whitenoise.django import DjangoWhiteNoise				# Added by me for serving static files 
+
+application = DjangoWhiteNoise(application)					# Added by me for serving static files.
+
+
+
+
+Configuring Links urls.py to actual "href=" in html file:
+-------------------------------------------------------
+Actual Source file location: /Django_Project (Parent folder) /mysite (Project) / cloudify (app) / templates / admin_templates / index.html (this could change to keep track)
+
+1.  Note: The template directory has been set: /media/redhat/apps/Django_project/mysite/templates/ 
+
+2.  mysite/mysite urls.py: No changes.
+
+3.  mysite/mysite/urls.py:
+    url(r'^cloudify/', include('cloudify.urls')),   - Let it be as is.
+
+4.  Note that We are direting to Azure CloudAdmin page from landing page which is under cloudify/ its URL is: 
+    http://127.0.0.1:8000/cloudify/
+
+5.  mysite/cloudify/urls.py, add:
+    url (r'^index/$', views.index, name='index'),
+
+    Also works if I add below line:
+    url (r'^admin_template/index/$', views.index, name='index'),
+
+6.  <a href="{% url 'index' %}" class="dropdown-item">                      # test
+        <i class="material-icons">shopping_cart</i> Azure
+
+7.  Redirects and URL appears as: http://127.0.0.1:8000/cloudify/index/
